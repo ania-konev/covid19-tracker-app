@@ -1,0 +1,12 @@
+@if(isLoading){
+<div class="text-center" style="margin-top: 40vh">
+  <div class="spinner-border text-primary" role="status"></div>
+  <span class="text-primary" role="status">Loading...</span>
+</div>
+
+}@else{
+
+<app-search (countryToSearch)="searchCountry($event)"></app-search>
+
+<app-data-table [covidData]="covidData"></app-data-table>
+}

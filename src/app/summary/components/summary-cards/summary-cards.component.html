@@ -1,0 +1,34 @@
+<div class="row mt-3">
+  <div class="col md-4">
+    <div class="card">
+      <div class="card-body">
+        <fa-icon class="checkmark" [icon]="faCheck"></fa-icon>
+        <i class="fa text-info"></i>
+        <h5 class="card-title">Confirmed</h5>
+        <p>{{ totalConfirmed | dotNumber }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col md-4">
+    <div class="card">
+      <div class="card-body">
+        <fa-icon class="xmark" [icon]="faXmark"></fa-icon>
+        <i class="fa text-danger"></i>
+        <h5 class="card-title">Deaths</h5>
+        <p>{{ totalDeaths | dotNumber }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col md-4">
+    <div class="card">
+      <div class="card-body">
+        <fa-icon class="heart" [icon]="faHeart"></fa-icon>
+        <i class="fa text-success"></i>
+        <h5 class="card-title">Recovered</h5>
+        <p>{{ totalRecovered | dotNumber }}</p>
+      </div>
+    </div>
+  </div>
+</div>

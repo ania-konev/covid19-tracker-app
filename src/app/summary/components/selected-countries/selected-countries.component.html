@@ -1,0 +1,62 @@
+<div class="row mt-5">
+  <div class="col-md-4">
+    <h4>Confirmed Cases</h4>
+
+    <ul class="list-group">
+      <li
+        class="list-group-item d-flex justify-content-between align-content-center"
+        *ngFor="
+          let countryCases of selectedConfirmedCases | keyvalue : orderByValue
+        "
+      >
+        <div class="ms-2 me-auto">
+          <div class="fw-bold">{{ countryCases.key }}</div>
+        </div>
+        <span class="badge bg-warning rounded-pill">{{
+          countryCases.value | dotNumber
+        }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-md-4">
+    <h4>Deaths</h4>
+
+    <ul class="list-group">
+      <li
+        class="list-group-item d-flex justify-content-between align-content-center"
+        *ngFor="
+          let countryDeaths of selectedConfirmedDeaths | keyvalue : orderByValue
+        "
+      >
+        <div class="ms-2 me-auto">
+          <div class="fw-bold">{{ countryDeaths.key }}</div>
+        </div>
+        <span class="badge bg-danger rounded-pill">{{
+          countryDeaths.value | dotNumber
+        }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-md-4">
+    <h4>Recovered</h4>
+
+    <ul class="list-group">
+      <li
+        class="list-group-item d-flex justify-content-between align-content-center"
+        *ngFor="
+          let countryRecovered of selectedConfirmedRecovered
+            | keyvalue : orderByValue
+        "
+      >
+        <div class="ms-2 me-auto">
+          <div class="fw-bold">{{ countryRecovered.key }}</div>
+        </div>
+        <span class="badge bg-success rounded-pill">{{
+          countryRecovered.value | dotNumber
+        }}</span>
+      </li>
+    </ul>
+  </div>
+</div>

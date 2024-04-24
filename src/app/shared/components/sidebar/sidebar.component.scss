@@ -1,0 +1,43 @@
+.sidebar {
+  width: 250px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background-color: white;
+  box-shadow: 1px 5px 10px #d1d1d1;
+  z-index: 1;
+  .logo {
+    text-align: center;
+    margin: 20px 0px 40px;
+    img {
+      width: 50%;
+    }
+  }
+  .navigation ul li {
+    margin: 10px 0px;
+    padding: 5px 15px;
+    cursor: pointer;
+    transition: all ease 0.4s;
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: #333333;
+      a {
+        color: white;
+      }
+    }
+    a {
+      text-decoration: none;
+      color: #333333;
+      font-size: 20px;
+      transition: all ease 0.4s;
+    }
+    .active {
+      background-color: #333333;
+      a {
+        color: white;
+      }
+    }
+  }
+}

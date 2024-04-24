@@ -1,0 +1,18 @@
+@if(isLoading){
+<div class="text-center" style="margin-top: 40vh">
+  <div class="spinner-border text-primary" role="status"></div>
+  <span class="text-primary" role="status">Loading...</span>
+</div>
+}@else{
+
+<div id="container" class="row mt-2">
+  <div class="col">
+    <highcharts-chart
+      [Highcharts]="HighCharts"
+      [constructorType]="chartConstructor"
+      [options]="chartOptions"
+      style="width: 100%; display: block; margin-top: 100px"
+    ></highcharts-chart>
+  </div>
+</div>
+}
