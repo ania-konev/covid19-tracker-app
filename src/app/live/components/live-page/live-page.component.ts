@@ -1,14 +1,10 @@
 import {
-  afterNextRender,
-  AfterRenderPhase,
   Component,
   Inject,
   OnInit,
   PLATFORM_ID,
+  ViewChild,
 } from '@angular/core';
-import * as Highcharts from 'highcharts/highmaps';
-import * as worldMap from '@highcharts/map-collection/custom/world.geo.json';
-import { HighchartsChartModule } from 'highcharts-angular';
 import { DataService } from '../../../shared/services/data.service';
 import {
   CountryDataType,
@@ -16,16 +12,21 @@ import {
 } from '../../../shared/functionAllCountriesData';
 import { CovidDataType } from '../../../summary/components/summary-page/summary-page.component';
 import { isPlatformBrowser } from '@angular/common';
+import * as Plot from '@observablehq/plot';
+import * as topojson from 'topojson-client';
+import { Topology, GeometryObject } from 'topojson-specification';
+import countries50m from 'world-atlas/countries-50m.json'; //it indicates where is each country in the world map
+import convertCountries from 'i18n-iso-countries';
 
 interface LiveDataType {
-  iso: string;
+  name: string;
   value: number;
 }
 
 @Component({
   selector: 'app-live-page',
   standalone: true,
-  imports: [HighchartsChartModule],
+  imports: [],
   templateUrl: './live-page.component.html',
   styleUrl: './live-page.component.scss',
 })
@@ -35,63 +36,12 @@ export class LivePageComponent implements OnInit {
   allCountriesData: Map<string, CountryDataType> = new Map();
   liveData: LiveDataType[] = [];
   isLoading: boolean = true;
+  @ViewChild('mychart') mychart!: { nativeElement: HTMLCanvasElement };
 
   constructor(
     private dataservice: DataService,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {
-    afterNextRender(
-      () => {
-        this.HighCharts.mapChart('container', this.chartOptions);
-      },
-      { phase: AfterRenderPhase.Write }
-    );
-  }
-
-  HighCharts: typeof Highcharts = Highcharts;
-  chartConstructor = 'mapChart';
-
-  chartOptions: Highcharts.Options = {
-    chart: {
-      map: worldMap,
-    },
-    title: {
-      text: 'COVID-19 World Data',
-    },
-    subtitle: {
-      text: 'Confirmed Cases',
-    },
-    mapNavigation: {
-      enabled: true,
-      buttonOptions: {
-        alignTo: 'spacingBox',
-      },
-    },
-    legend: {
-      enabled: true,
-    },
-    colorAxis: {
-      min: 0,
-    },
-    series: [
-      {
-        type: 'map',
-        name: 'COVID-19 Data',
-        states: {
-          hover: {
-            color: '#dc3545',
-          },
-        },
-        dataLabels: {
-          enabled: true,
-          format: '{point.name}',
-        },
-        allAreas: false,
-        data: [['by', 45]],
-        joinBy: ['iso-a3', 'iso'],
-      },
-    ],
-  };
+  ) {}
 
   ngOnInit(): void {
     this.dataservice
@@ -103,20 +53,41 @@ export class LivePageComponent implements OnInit {
           'iso'
         );
         this.isLoading = false;
+        const topoCountries = topojson.feature(
+          countries50m as unknown as Topology,
+          countries50m.objects
+            .countries as GeometryObject<GeoJSON.GeoJsonProperties>
+        );
+        const plot = Plot.plot({
+          projection: 'equal-earth',
+          width: 928,
+          height: 928 / 2,
+          color: {
+            scheme: 'YlGnBu',
+            unknown: '#ccc',
+            label: 'Confirmed cases',
+            legend: false,
+          },
+          marks: [
+            Plot.sphere({ fill: 'white', stroke: 'currentColor' }),
+            Plot.geo(topoCountries, {
+              fill: (country) => {
+                const convertId = convertCountries.numericToAlpha3(country.id);
 
-        for (let [key, value] of this.allCountriesData) {
-          this.liveData.push({ iso: key, value: value.confirmed });
-        }
+                return this.allCountriesData.get(convertId!)?.confirmed;
+              },
+            }),
+            Plot.tip(
+              (topoCountries as GeoJSON.FeatureCollection).features,
+              Plot.pointer(Plot.centroid({ title: (d) => d.properties.name }))
+            ),
+          ],
+        });
 
-        if (
-          this.chartOptions.series !== undefined &&
-          this.chartOptions.series?.[0].type === 'map'
-        ) {
-          (this.chartOptions.series[0] as Highcharts.SeriesMapOptions).data =
-            this.liveData;
-        } else {
-          console.log('Error: chartOptions.series is undefinied');
-        }
+        this.mychart.nativeElement.append(
+          plot.legend('color', { width: 320 }) as HTMLElement,
+          plot
+        );
       })
       .catch((error: Error) => {
         if (isPlatformBrowser(this.platformId)) {
