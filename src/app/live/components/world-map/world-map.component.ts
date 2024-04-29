@@ -18,23 +18,23 @@ import { Topology, GeometryObject } from 'topojson-specification';
 import countries50m from 'world-atlas/countries-50m.json'; //it indicates where is each country in the world map
 import convertCountries from 'i18n-iso-countries';
 
-interface LiveDataType {
+interface WorldMapDataType {
   name: string;
   value: number;
 }
 
 @Component({
-  selector: 'app-live-page',
+  selector: 'app-world-map',
   standalone: true,
   imports: [],
-  templateUrl: './live-page.component.html',
-  styleUrl: './live-page.component.scss',
+  templateUrl: './world-map.component.html',
+  styleUrl: './world-map.component.scss',
 })
-export class LivePageComponent implements OnInit {
+export class WorldMapPageComponent implements OnInit {
   covidData: CovidDataType[] = [];
 
   allCountriesData: Map<string, CountryDataType> = new Map();
-  liveData: LiveDataType[] = [];
+  worldMapData: WorldMapDataType[] = [];
   isLoading: boolean = true;
   @ViewChild('mychart') mychart!: { nativeElement: HTMLCanvasElement };
 
@@ -77,6 +77,7 @@ export class LivePageComponent implements OnInit {
                 return this.allCountriesData.get(convertId!)?.confirmed;
               },
             }),
+
             Plot.tip(
               (topoCountries as GeoJSON.FeatureCollection).features,
               Plot.pointer(Plot.centroid({ title: (d) => d.properties.name }))

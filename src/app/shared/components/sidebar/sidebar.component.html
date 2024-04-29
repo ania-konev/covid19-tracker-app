@@ -1,8 +1,6 @@
 <nav class="sidebar">
   <div class="logo">
-    <a [routerLink]="'summary'">
-      <img src="src\assets\img\logo.png" alt="Logo"
-    /></a>
+    <a [routerLink]="'summary'"> <img src="assets/logo.png" alt="Logo" /></a>
   </div>
   <div class="navigation">
     <ul class="list-unstyled">
@@ -11,7 +9,9 @@
       <li [routerLink]="'country'" routerLinkActive="active">
         <a>By Country</a>
       </li>
-      <li [routerLink]="'live'" routerLinkActive="active"><a>Live</a></li>
+      <li [routerLink]="'worldMap'" routerLinkActive="active">
+        <a>World Map</a>
+      </li>
     </ul>
   </div>
 </nav>

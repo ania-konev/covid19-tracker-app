@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LivePageComponent } from './live-page.component';
+import { WorldMapPageComponent } from './world-map.component';
 
-describe('LivePageComponent', () => {
-  let component: LivePageComponent;
-  let fixture: ComponentFixture<LivePageComponent>;
+describe('WorldMapPageComponent', () => {
+  let component: WorldMapPageComponent;
+  let fixture: ComponentFixture<WorldMapPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LivePageComponent],
+      imports: [WorldMapPageComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LivePageComponent);
+    fixture = TestBed.createComponent(WorldMapPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

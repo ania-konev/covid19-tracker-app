@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LivePageComponent } from './components/live-page/live-page.component';
+import { WorldMapPageComponent } from './components/world-map/world-map.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: LivePageComponent,
+    component: WorldMapPageComponent,
   },
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class LiveRoutingModule {}
+export class WorldMapRoutingModule {}

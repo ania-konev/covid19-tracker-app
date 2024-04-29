@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { SharedModule } from './shared/shared.module';
 import { SummaryModule } from './summary/summary.module';
 import { CountryModule } from './country/country.module';
-import { LiveModule } from './live/live.module';
+import { WorldMapModule } from './live/world-map.module';
 import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
@@ -14,7 +14,7 @@ import { BaseChartDirective } from 'ng2-charts';
     SharedModule,
     SummaryModule,
     CountryModule,
-    LiveModule,
+    WorldMapModule,
     BaseChartDirective,
   ],
   templateUrl: './app.component.html',

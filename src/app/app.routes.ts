@@ -17,8 +17,8 @@ export const routes: Routes = [
       import('./country/country.module').then((module) => module.CountryModule),
   },
   {
-    path: 'live',
+    path: 'worldMap',
     loadChildren: () =>
-      import('./live/live.module').then((module) => module.LiveModule),
+      import('./live/world-map.module').then((module) => module.WorldMapModule),
   },
 ];

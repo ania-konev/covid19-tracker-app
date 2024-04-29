@@ -20,4 +20,4 @@ The application works in the following way:
 
 - On the `By Country` page you find a table for all countries with data for confirmed, recovered and deaths cases. There is a possibility to select only countries of your choice.
 
-- On the `Live` page there is a world map on which you can hover for selected country and see the number of confirmed cases.
+- On the `World Map` page there is a world map on which you can hover for selected country and see the number of confirmed cases.
